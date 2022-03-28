@@ -1,0 +1,15 @@
+[package]
+name = "ppvr"
+version = "0.1.0"
+author = ["xiangxu <iasonliu@gmail.com>"]
+edition = "2021"
+rust-version = "1.59"
+description = "A command line pipeline viewer tools"
+documentation = "https://docs.rs/ppvr"
+repository = "https://github.com/iasonliu/ppvr"
+homepage = "https://github.com/iasonliu/ppvr"
+license = "MIT"
+categories = ["command-line-utilities"]
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
