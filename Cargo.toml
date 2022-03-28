@@ -1,7 +1,7 @@
 [package]
 name = "ppvr"
 version = "0.1.0"
-author = ["xiangxu <iasonliu@gmail.com>"]
+author = ["xiangxu <iasonliu+crates@gmail.com>"]
 edition = "2021"
 rust-version = "1.59"
 description = "A command line pipeline viewer tools"
