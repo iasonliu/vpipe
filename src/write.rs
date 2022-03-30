@@ -1,9 +1,8 @@
 use std::fs::File;
 use std::io::{self, BufWriter, ErrorKind, Result, Write};
-use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::Arc;
+use std::sync::mpsc::Receiver;
 
-pub fn write_loop(outfile: &str,  quit: Arc<AtomicBool>) -> Result<()> {
+pub fn write_loop(outfile: &str, write_rx: Receiver<Vec<u8>>) -> Result<()> {
     let mut writer: Box<dyn Write> = if !outfile.is_empty() {
         Box::new(BufWriter::new(File::create(outfile)?))
     } else {
@@ -11,12 +10,10 @@ pub fn write_loop(outfile: &str,  quit: Arc<AtomicBool>) -> Result<()> {
     };
 
     loop {
-        // TODO: recevie vector from stats thread
-        let buffer: Vec<u8> = Vec::new(); // so we can complie
-        {
-            if quit.load(Ordering::SeqCst) {
-                break;
-            }
+        // recevie vector from stats thread
+        let buffer = write_rx.recv().unwrap();
+        if buffer.is_empty() {
+            break;
         }
         if let Err(e) = writer.write_all(&buffer) {
             match e.kind() {

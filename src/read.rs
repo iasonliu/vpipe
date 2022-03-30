@@ -1,10 +1,9 @@
 use crate::CHUNK_SIZE;
 use std::fs::File;
 use std::io::{self, BufReader, Read, Result};
-use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::Arc;
+use std::sync::mpsc::Sender;
 
-pub fn read_loop(infile: &str,  quit: Arc<AtomicBool>) -> Result<()> {
+pub fn read_loop(infile: &str, stats_tx: Sender<Vec<u8>>) -> Result<()> {
     let mut reader: Box<dyn Read> = if !infile.is_empty() {
         Box::new(BufReader::new(File::open(infile)?))
     } else {
@@ -17,11 +16,13 @@ pub fn read_loop(infile: &str,  quit: Arc<AtomicBool>) -> Result<()> {
             Ok(x) => x,
             Err(_) => break,
         };
-        //TODO: send this buffer to the stats thread
-        let _ = Vec::from(&buffer[..num_read]);
+        //send this buffer to the stats thread
+        if stats_tx.send(Vec::from(&buffer[..num_read])).is_err() {
+            break;
+        };
     }
 
-    //TODO: send an an empty buffer to the stats thread
-    quit.store(true, Ordering::Relaxed);
+    //send an an empty buffer to the stats thread
+    let _ = stats_tx.send(Vec::new());
     Ok(())
 }
