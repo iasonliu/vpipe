@@ -1,9 +1,32 @@
+use clap::Parser;
 use std::env;
 use std::io::{self, ErrorKind, Read, Result, Write};
 
+#[derive(Parser, Debug)]
+#[clap(author, version, about, long_about = None)]
+struct Args {
+    #[clap(help = "Read from a file instead of stdin")]
+    infile: String,
+    #[clap(
+        short = 'o',
+        long = "outfile",
+        takes_value = true,
+        help = "Write to stdout instead of stdout"
+    )]
+    outfile: String,
+    #[clap(short = 's', long = "silent", help = "silent output")]
+    silent: bool,
+}
 const CHUNK_SIZE: usize = 16 * 1024;
 fn main() -> Result<()> {
-    let silent = !env::var("PPVR_SILENT").unwrap_or_default().is_empty();
+    let args = Args::parse();
+    let infile = args.infile;
+    let outfile = args.outfile;
+    let silent = if args.silent {
+        true
+    } else {
+        !env::var("PPVR_SILENT").unwrap_or_default().is_empty()
+    };
     let mut total_bytes = 0;
     let mut buffer = [0; CHUNK_SIZE];
     loop {
