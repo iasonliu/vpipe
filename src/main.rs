@@ -20,8 +20,8 @@ struct Args {
 const CHUNK_SIZE: usize = 16 * 1024;
 fn main() -> Result<()> {
     let args = Args::parse();
-    let infile = args.infile;
-    let outfile = args.outfile;
+    let _infile = args.infile;
+    let _outfile = args.outfile;
     let silent = if args.silent {
         true
     } else {
