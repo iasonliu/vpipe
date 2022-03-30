@@ -1,12 +1,12 @@
 [package]
-name = "ppvr"
+name = "pipe"
 version = "0.2.1"
 edition = "2021"
 rust-version = "1.59"
 description = "A command line pipeline viewer tools"
 documentation = "https://docs.rs/ppvr"
-repository = "https://github.com/iasonliu/ppvr"
-homepage = "https://github.com/iasonliu/ppvr"
+repository = "https://github.com/iasonliu/pipe"
+homepage = "https://github.com/iasonliu/pipe"
 license = "MIT"
 categories = ["command-line-utilities"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
