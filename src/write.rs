@@ -7,7 +7,7 @@ pub fn write(outfile: &str, buffer: &[u8]) -> Result<bool> {
     } else {
         Box::new(BufWriter::new(io::stdout()))
     };
-    if let Err(e) = writer.write_all(&buffer) {
+    if let Err(e) = writer.write_all(buffer) {
         match e.kind() {
             ErrorKind::BrokenPipe => {
                 // false means "stop the program cleanly"

@@ -19,18 +19,18 @@ pub struct Args {
 }
 
 impl Args {
-  pub fn get_args() -> Self {
-    let args = Args::parse();
-    let silent = if args.silent {
-      true
-    } else {
-      !env::var("PPVR_SILENT").unwrap_or_default().is_empty()
-    };
+    pub fn get_args() -> Self {
+        let args = Args::parse();
+        let silent = if args.silent {
+            true
+        } else {
+            !env::var("PPVR_SILENT").unwrap_or_default().is_empty()
+        };
 
-    Self{
-      infile: args.infile,
-      outfile: args.outfile,
-      silent
+        Self {
+            infile: args.infile,
+            outfile: args.outfile,
+            silent,
+        }
     }
-  }
 }
