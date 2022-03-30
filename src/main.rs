@@ -1,7 +1,7 @@
-use pipe::{args::Args, read, stats, write};
 use std::io::Result;
 use std::sync::mpsc;
 use std::thread;
+use vpipe::{args::Args, read, stats, write};
 
 fn main() -> Result<()> {
     let args = Args::get_args();
