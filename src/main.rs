@@ -1,4 +1,4 @@
-use ppvr::{args::Args, read, stats, write};
+use pipe::{args::Args, read, stats, write};
 use std::io::Result;
 use std::sync::mpsc;
 use std::thread;
